@@ -303,7 +303,7 @@ static void adjust_topline(Term *term, emacs_env *env, long added) {
   emacs_value window = get_buffer_window(env);
   emacs_value swindow = selected_window(env);
 
-  if (swindow == window) {
+  if (eq(env, swindow, window)) {
     if (following) {
       // "Follow" the terminal output
       recenter(env, env->make_integer(
@@ -757,6 +757,7 @@ int emacs_module_init(struct emacs_runtime *ert) {
       env->make_global_ref(env, env->intern(env, "vterm--set-title"));
   Fvterm_invalidate =
       env->make_global_ref(env, env->intern(env, "vterm--invalidate"));
+  Feq = env->make_global_ref(env, env->intern(env, "eq"));
 
 
   // Exported functions
